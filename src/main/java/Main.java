@@ -29,6 +29,29 @@ class Main {
 		insertList(p,task);
 		return p;
 	}
+	public static Node<Range> createRangeList(Node<Integer> sourceList){
+		Node<Integer> p=sourceList;
+		Node<Range> ranges=new Node<>(null);
+		Node<Range> first=ranges;
+		Range range;
+		int from=p.getValue();
+		int count=0;
+		while(p.hasNext()) {
+			if(p.getNext().getValue()-p.getValue()==1)
+				count++;
+			else {
+				range=new Range(from,from+count);
+				ranges.setNext(new Node<>(range));
+				ranges=ranges.getNext();
+				from=p.getNext().getValue();
+				count=0;
+			}
+			p=p.getNext();
+		}
+		range=new Range(from,from+count);
+		ranges.setNext(new Node<>(range));
+		return first.getNext();
+	}
   public static void main(String[] args) {
     System.out.println("Hello World!");
   }
